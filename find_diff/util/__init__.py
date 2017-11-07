@@ -3,8 +3,6 @@
 
 '''doc'''
 
-from singleton import singleton, Data
+from util.book import Book, Sheet, Cell
 
-from fn_time import fn_time
-
-from conv import to_str, to_float
+from util.util import singleton, fn_time, Data, to_float, to_str
