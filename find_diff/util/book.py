@@ -66,8 +66,6 @@ class Sheet():
         self.num_col_index = None
         self.num_col_data = None
         self.alone_val_rows = None
-        self.max_row = None
-        self.max_col = None
         self.sheet_cell_dict = {}
 
     def get_cell(self, row, col):
@@ -79,15 +77,25 @@ class Sheet():
         cell = Cell(sheet_cell)
         self.sheet_cell_dict[row, col] = cell
         return cell
+    def exist_row(self, src_col_vals):
+        '''doc'''
+        max_row = self.get_max_row()
+        max_col = self.get_max_col()
+        src_col_num = len(src_col_vals)
+        for row_index in range(1, max_row + 1):
+            all_equal = True
+            for col_index in range(1, max_col + 1):
+                if src_col_num < col_index:
+                    break
+                src_val = src_col_vals[col_index - 1]
+                tar_val = self.get_cell(row_index, col_index).get_str_val()
+
 
     def get_max_col(self):
         '''doc'''
-        if self.max_col is not None:
-            return self.max_col
         sheet_max_row = self.sheet.max_row
         sheet_max_col = self.sheet.max_column
         max_col = sheet_max_col
-
         for col_index in range(sheet_max_col, 0, -1):
             has_val = False
             for row_index in range(sheet_max_row, 0, -1):
@@ -99,13 +107,10 @@ class Sheet():
                 max_col -= 1
             else:
                 break
-        self.max_col = max_col
-        return self.max_col
+        return max_col
 
     def get_max_row(self):
         '''doc'''
-        if self.max_row is not None:
-            return self.max_row
         sheet_max_row = self.sheet.max_row
         sheet_max_col = self.sheet.max_column
         max_row = sheet_max_row
@@ -120,8 +125,7 @@ class Sheet():
                 max_row -= 1
             else:
                 break
-        self.max_row = max_row
-        return self.max_row
+        return max_row
 
     def get_num_col_index(self):
         '''doc'''
@@ -261,8 +265,6 @@ class Sheet():
                 tar_cell.set_fill_red()
             elif color == "BLUE":
                 tar_cell.set_fill_blue()
-
-        self.max_row += 1
 
 class Book():
     '''doc'''
