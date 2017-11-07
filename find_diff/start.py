@@ -4,7 +4,7 @@
 '''doc'''
 
 import time
-from util import Book
+from .util import Book
 
 def main():
     '''doc'''
